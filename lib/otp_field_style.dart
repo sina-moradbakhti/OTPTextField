@@ -4,6 +4,9 @@ class OtpFieldStyle {
   /// The background color for outlined box.
   final Color backgroundColor;
 
+  /// The background color for focusing outlined box.
+  final Color? focusedColor;
+
   /// The border color text field.
   final Color borderColor;
 
@@ -21,6 +24,7 @@ class OtpFieldStyle {
 
   OtpFieldStyle(
       {this.backgroundColor: Colors.transparent,
+      this.focusedColor,
       this.borderColor: Colors.black26,
       this.focusBorderColor: Colors.blue,
       this.disabledBorderColor: Colors.grey,
