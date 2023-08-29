@@ -60,12 +60,16 @@ class OTPTextField extends StatefulWidget {
   /// Callback function, called when pin is completed.
   final ValueChanged<String>? onCompleted;
 
+  /// This stroke effects on the input while focusing and enabling
+  final double? borderStroke;
+
   final List<TextInputFormatter>? inputFormatter;
 
   const OTPTextField({
     Key? key,
     this.length = 4,
     this.width = 10,
+    this.borderStroke,
     this.controller,
     this.fieldWidth = 30,
     this.spaceBetween = 0,
@@ -162,16 +166,19 @@ class _OTPTextFieldState extends State<OTPTextField> {
 
     final isLast = index == widget.length - 1;
 
-    InputBorder _getBorder(Color color) {
+    InputBorder _getBorder(Color color, {double? borderStrokeWidth}) {
       final colorOrError =
           widget.hasError ? _otpFieldStyle.errorBorderColor : color;
 
       return widget.fieldStyle == FieldStyle.box
           ? OutlineInputBorder(
-              borderSide: BorderSide(color: colorOrError),
+              borderSide: BorderSide(
+                  color: colorOrError, width: borderStrokeWidth ?? 1.0),
               borderRadius: BorderRadius.circular(widget.outlineBorderRadius),
             )
-          : UnderlineInputBorder(borderSide: BorderSide(color: colorOrError));
+          : UnderlineInputBorder(
+              borderSide: BorderSide(
+                  color: colorOrError, width: borderStrokeWidth ?? 1.0));
     }
 
     return Container(
@@ -197,12 +204,18 @@ class _OTPTextFieldState extends State<OTPTextField> {
               : _otpFieldStyle.backgroundColor,
           counterText: "",
           contentPadding: widget.contentPadding,
-          border: _getBorder(_otpFieldStyle.borderColor),
-          focusedBorder: _getBorder(_otpFieldStyle.focusBorderColor),
-          enabledBorder: _getBorder(_otpFieldStyle.enabledBorderColor),
-          disabledBorder: _getBorder(_otpFieldStyle.disabledBorderColor),
-          errorBorder: _getBorder(_otpFieldStyle.errorBorderColor),
-          focusedErrorBorder: _getBorder(_otpFieldStyle.errorBorderColor),
+          border: _getBorder(_otpFieldStyle.borderColor,
+              borderStrokeWidth: widget.borderStroke),
+          focusedBorder: _getBorder(_otpFieldStyle.focusBorderColor,
+              borderStrokeWidth: widget.borderStroke),
+          enabledBorder: _getBorder(_otpFieldStyle.enabledBorderColor,
+              borderStrokeWidth: widget.borderStroke),
+          disabledBorder: _getBorder(_otpFieldStyle.disabledBorderColor,
+              borderStrokeWidth: widget.borderStroke),
+          errorBorder: _getBorder(_otpFieldStyle.errorBorderColor,
+              borderStrokeWidth: widget.borderStroke),
+          focusedErrorBorder: _getBorder(_otpFieldStyle.errorBorderColor,
+              borderStrokeWidth: widget.borderStroke),
           errorText: null,
           // to hide the error text
           errorStyle: const TextStyle(height: 0, fontSize: 0),
